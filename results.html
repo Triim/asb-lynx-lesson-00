@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f8fc">
+  <meta name="robots" content="noindex">
+  <title>Class results · Lesson 0</title>
+  <link rel="stylesheet" href="results.css">
+  <script type="module" src="results.js"></script>
+</head>
+<body class="dash-page">
+  <header class="dash-top">
+    <a class="dash-brand" href="teacher.html"><span>Leagues of Code</span><b>×</b><span>AI Foundations</span></a>
+    <div class="dash-account" id="account" hidden>
+      <button type="button" class="dash-button quiet" id="text-size" aria-pressed="false">Large text</button>
+      <span class="dash-email" id="account-email"></span>
+      <button type="button" class="dash-button quiet" id="sign-out">Sign out</button>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <p class="dash-status" id="boot-status" role="status">Checking sign-in…</p>
+
+    <section class="dash-signin" id="signed-out" hidden>
+      <span class="dash-eyebrow">LESSON 0 · TEACHER</span>
+      <h1>Class results</h1>
+      <p>Sign in with the teacher’s Google account to see students’ experiment results as they arrive.</p>
+      <button type="button" class="dash-button primary" id="sign-in">Sign in with Google</button>
+      <p class="dash-error" id="auth-error" role="alert" hidden></p>
+    </section>
+
+    <section id="signed-in" hidden>
+      <div class="dash-heading">
+        <div>
+          <span class="dash-eyebrow">LESSON 0 · LIVE</span>
+          <h1>Class results</h1>
+        </div>
+        <p class="dash-live" id="live-status" role="status"></p>
+      </div>
+
+      <div class="dash-error" id="read-error" role="alert" hidden></div>
+
+      <div class="dash-controls">
+        <label class="dash-field">Session
+          <select id="session-filter"></select>
+        </label>
+        <div class="dash-share">
+          <button type="button" class="dash-button" id="new-session">New class session</button>
+          <div class="dash-share-link" id="share-link" hidden>
+            <span>Student link for <b id="share-code"></b></span>
+            <div>
+              <input id="share-url" type="text" readonly aria-label="Student link with session code">
+              <button type="button" class="dash-button primary" id="copy-link">Copy link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-summary" id="summary"></div>
+
+      <div class="dash-table-wrap">
+        <table class="dash-table" id="results-table">
+          <thead>
+            <tr>
+              <th rowspan="2" scope="col" class="dash-student-col">Student</th>
+              <th colspan="3" scope="colgroup" class="band-start band-image">Image models <small>12 held-out test photos</small></th>
+              <th colspan="3" scope="colgroup" class="band-start band-language">Language model <small>10 fixed next-word cases</small></th>
+              <th rowspan="2" scope="col">Last result</th>
+            </tr>
+            <tr>
+              <th scope="col" class="band-start band-image">Training photos</th>
+              <th scope="col" class="band-image">Nearest neighbor accuracy</th>
+              <th scope="col" class="band-image">Neural network accuracy</th>
+              <th scope="col" class="band-start band-language">Training sentences</th>
+              <th scope="col" class="band-language">Accuracy</th>
+              <th scope="col" class="band-language">Coverage</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+
+      <dl class="dash-legend">
+        <div><dt>Image accuracy</dt><dd>Photos classified correctly ÷ the same 12 held-out photos, for each image model.</dd></div>
+        <div><dt>Language accuracy</dt><dd>Exact top-word matches ÷ all 10 benchmark cases, including unanswered ones.</dd></div>
+        <div><dt>Language coverage</dt><dd>Cases where the model made any prediction ÷ 10. It is not accuracy.</dd></div>
+      </dl>
+      <p class="dash-footnote">Each row shows a student’s latest result of each kind. Open “attempts” to see every saved test. Students are anonymous; no names, sentences, or photos are stored.</p>
+    </section>
+  </main>
+</body>
+</html>

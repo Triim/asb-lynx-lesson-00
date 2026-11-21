@@ -1,5 +1,7 @@
 import { trainNearestNeighbor, trainNeuralNetwork, evaluateHeldOutAccuracy, createTrainingSamples, invalidateExperiment, hogFromGray, trainBigramLanguageModel, BIGRAM_CORPUS_CANDIDATES, BIGRAM_CORPUS_OPTIONS, BIGRAM_BENCHMARK, evaluateBigramBenchmark, invalidateLanguageExperiment, navigateLesson } from './models.js';
 import { photos, categories, categoryName, trainingCandidates, heldOutPhotos } from './dataset.js';
+import { imageResult, languageResult, newAttemptId, resolveSessionId } from './result-records.js';
+import { createResultSync } from './result-sync.js';
 
 const $ = (selector) => document.querySelector(selector);
 const categorySingular = { dog: 'Dog', cat: 'Cat', bird: 'Bird', vehicle: 'Vehicle' };
@@ -35,7 +37,12 @@ const state = {
   appModel:'classical', appCategory:'bird', appSearched:false,
   matches:{}, matchActive:'', matchFeedback:{}, reflection:'',
   loadErrors:[], loading:true, modelError:'', invalidated:false, labelRevision:0,
+  imageAttempt:null, languageAttempt:null,
 };
+// Results are saved in the background; saving never blocks or breaks the lesson.
+const tabStorage=(()=>{try{return window.sessionStorage}catch{return null}})();
+const resultSync=createResultSync({sessionId:resolveSessionId(location.search,tabStorage),element:$('#save-status')});
+function saveResult(id,build){try{resultSync.save(id,build())}catch(e){console.warn('Lesson result not saved:',e.message)}}
 const pageCount=16;
 const pages={measure:2,classifier:3,network:4,evaluation:5,result:6,languageStart:7,languageEvidence:8,languageEdit:9,languageExplore:10,languageEvaluation:11,languageResult:12,app:13,match:14,reflection:15};
 const esc=(value)=>String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -149,7 +156,7 @@ $('#student-main').addEventListener('click',event=>{
     if(b.dataset.action==='show-neighbors'){state.classicalPeek=!state.classicalPeek;render();return}
     if(b.dataset.action==='reveal-classifier'){const p=heldOutPhotos.find(x=>x.id===state.classicalPhoto);state.classicalResult={photo:p.id,prediction:state.classical.predict(p.feature)};render();return}
     if(b.dataset.action==='train-neural'){state.networkError='';state.networkBefore=trainNeuralNetwork(trainingSamples(),{seed:1,epochs:0});state.neural=trainNeuralNetwork(trainingSamples(),{seed:1});render();return}
-    if(b.dataset.action==='evaluate'){state.scores={classical:accuracy(state.classical),neural:accuracy(state.neural)};state.reportModel='neural';setPage(pages.evaluation);return}
+    if(b.dataset.action==='evaluate'){if(!state.scores||state.imageAttempt?.classical!==state.classical||state.imageAttempt?.neural!==state.neural){state.scores={classical:accuracy(state.classical),neural:accuracy(state.neural)};state.reportModel='neural';state.imageAttempt={id:newAttemptId(),classical:state.classical,neural:state.neural};saveResult(state.imageAttempt.id,()=>imageResult({trainingCount:selectedPhotos().length,nearest:state.scores.classical,neural:state.scores.neural}))}setPage(pages.evaluation);return}
     if(b.dataset.reportModel){state.reportModel=b.dataset.reportModel;render();return}
     if(b.dataset.action==='fullscreen'){state.resultFullscreen=!state.resultFullscreen;document.body.classList.toggle('result-fullscreen',state.resultFullscreen);render();return}
     if(b.dataset.action==='revise'){setPage(1);return}
@@ -164,7 +171,7 @@ $('#student-main').addEventListener('click',event=>{
       catch(e){state.lmError=e.message;state.lmRan=false;state.lmModel=null;state.lmResults=[];render()}return
     }
     if(b.dataset.action==='generate-language'){if(!state.lmModel||!state.lmRan)throw new Error('Train the text model first.');state.lmGenerated=state.lmModel.generate('a bird',5).join(' ');render();return}
-    if(b.dataset.action==='evaluate-language'){if(!state.lmModel||!state.lmRan)throw new Error('Train the bigram model first.');state.lmEvaluation=evaluateBigramBenchmark(state.lmModel,BIGRAM_BENCHMARK);state.lmEvaluationIndex=0;setPage(pages.languageResult);return}
+    if(b.dataset.action==='evaluate-language'){if(!state.lmModel||!state.lmRan)throw new Error('Train the bigram model first.');if(!state.lmEvaluation||state.languageAttempt?.model!==state.lmModel){state.lmEvaluation=evaluateBigramBenchmark(state.lmModel,BIGRAM_BENCHMARK);state.languageAttempt={id:newAttemptId(),model:state.lmModel};saveResult(state.languageAttempt.id,()=>languageResult({trainingSentences:state.lmTrainingCount,evaluation:state.lmEvaluation}))}state.lmEvaluationIndex=0;setPage(pages.languageResult);return}
     if(b.dataset.action==='next-language-case'){state.lmEvaluationIndex=(state.lmEvaluationIndex+1)%BIGRAM_BENCHMARK.length;render();$('[data-action="next-language-case"]')?.focus();return}
     if(b.dataset.action==='language-fullscreen'){state.lmFullscreen=!state.lmFullscreen;document.body.classList.toggle('language-fullscreen',state.lmFullscreen);render();$('[data-action="language-fullscreen"]')?.focus();return}
     if(b.dataset.action==='change-language-corpus'){if(state.lmFullscreen){state.lmFullscreen=false;document.body.classList.remove('language-fullscreen')}setPage(pages.languageEdit);return}
