@@ -550,7 +550,9 @@ body.student-page{display:flex;flex-direction:column;min-height:100dvh;backgroun
 .student-page .word-choices{display:flex;gap:12px;flex-wrap:wrap}
 .student-page .word-choices .choice-button{min-width:150px}
 .student-page .language-edit textarea,.student-page .reflection-screen textarea{width:100%;max-width:900px;padding:14px;border:1px solid #aeb7c2;border-radius:5px;background:#fff;font:inherit;font-size:20px;line-height:1.5}
-.student-page .corpus-control,.student-page .reflection-control{font-size:20px;font-weight:700}
+.student-page .corpus-control,.student-page .dataset-screen .label-editor{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.student-page .dataset-screen .label-editor .category-buttons{display:flex;flex-wrap:wrap;gap:6px}
+.student-page .reflection-control{font-size:20px;font-weight:700}
 .student-page .language-actions{display:flex;gap:12px;flex-wrap:wrap}
 .student-page .search-controls{width:100%;display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end}
 .student-page .search-controls label{display:grid;gap:7px;font-size:19px;font-weight:700}
@@ -790,4 +792,131 @@ body.student-page{height:100dvh;min-height:0;overflow:hidden}
  .student-page .match-screen .match-action,.student-page .match-screen .match-stage{min-height:28px;padding:4px;font-size:9px;line-height:1.1}
  .student-page .search-screen .search-results img{height:7vh}
  .student-page .search-screen .search-results figcaption{font-size:10px;padding:3px}
+}
+
+/* ==========================================================================
+   Unified visual system (teacher, student, results share these rules).
+   Structure comes from type, spacing and thin rules on one light page.
+   White surfaces are kept only for things people press or present:
+   buttons, inputs, selectable photos, matching items and result cards.
+   ========================================================================== */
+:root{--page:#f8fafc;--surface:#fff;--line:#dfe5ee;--line-strong:#c5cfdc;--tint:#eef2f8;--ink:#0f172a;--body:#475569;--muted:#64748b;--blue:#2b8ac5;--blue-dark:#17699f;--blue-tint:#eaf4fc;--indigo:#181a56;--violet:#5947d3;--violet-tint:#f0eefc;--green:#18784f;--r-sm:8px;--r-lg:14px;--shadow:0 1px 2px rgb(15 23 42/.05),0 10px 28px rgb(15 23 42/.07)}
+body.teacher-page,body.student-page{background:var(--page);color:var(--ink)}
+
+/* Chrome: header and footer sit on the page, separated by a hairline. */
+.teacher-page .deck-toolbar,.teacher-page .deck-bottom{background:var(--page);border-color:var(--line)}
+.student-page .student-top{background:var(--page);border-bottom:1px solid var(--line)}
+.student-page .student-bottom{background:var(--page);border-top:1px solid var(--line)}
+.teacher-page .deck-actions button,.teacher-page .toolbar-link,.teacher-page .deck-navigation button{border:1px solid var(--line-strong);border-radius:var(--r-sm);background:transparent;color:var(--ink)}
+.teacher-page .deck-actions button:hover,.teacher-page .toolbar-link:hover,.teacher-page .deck-navigation button:hover:not(:disabled){background:var(--surface)}
+
+/* Buttons and choice controls: one radius, one border, one pressed state. */
+.btn{border-radius:var(--r-sm)}
+.btn.primary{background:var(--blue);border-color:transparent;color:#fff;box-shadow:0 2px 10px rgb(43 138 197/.28)}
+.btn.primary:hover:not(:disabled){background:var(--blue-dark)}
+.btn.ghost{background:var(--surface);border-color:var(--line-strong);box-shadow:none}
+.student-page .size-choice button,.student-page .report-model-choice button,.student-page .category-choice,.student-page .choice-button,.student-page .match-action,.student-page .match-stage,.student-page .dataset-photo{border-radius:var(--r-sm);border-color:var(--line-strong)}
+.student-page select,.student-page textarea,.student-page .reflection-control textarea{border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface)}
+.student-page .dataset-photo:not(.included){background:transparent}
+.student-page .dataset-photo.included{background:var(--blue-tint);border:2px solid var(--blue-dark)}
+
+/* --- Teacher slides ------------------------------------------------------ */
+.teacher-page .slide-visual img,.teacher-page .discussion-content img{border-radius:10px}
+.teacher-page :is(.hook-example,.project-example,.app-example,.network-demo,.label-example,.measure-example,.neighbor-demo,.sentence-counts,.improve-flow,.text-training-flow,.map-example,.evidence-callout,.word-example){background:transparent;border:0;box-shadow:none}
+.teacher-page .parallel-example figure,.teacher-page .test-demo>div,.teacher-page .slide-match-demo>div{background:transparent;box-shadow:none}
+.teacher-page :is(.hook-example,.project-example,.app-example,.network-demo,.label-example,.measure-example,.neighbor-demo,.sentence-counts,.map-example,.parallel-example figure){padding:0}
+.teacher-page :is(.transition-copy,.process-map,.map-example,.parallel-example,.app-example,.hook-example,.program-overview,.ioai-line){margin-left:0;margin-right:auto}
+.teacher-page :is(.hook-example,.project-example,.app-example,.network-demo){gap:clamp(18px,3vw,44px)}
+.teacher-page :is(.hook-example,.project-example,.app-example) strong{color:var(--indigo)}
+.teacher-page .transition-copy>strong{color:var(--indigo)}
+/* One grouping cue for steps and comparisons: a thin coloured top rule. */
+.teacher-page .program-topics{gap:clamp(14px,2.4vh,24px) clamp(18px,2.4vw,32px)}
+.teacher-page .program-topics span{padding:clamp(8px,1.2vh,12px) 0 0;background:transparent;border:0;border-top:3px solid var(--blue)}
+.process-step,.teacher-page .process-step,.student-page .process-step{min-height:0;padding:14px 6px 4px 0;background:transparent;border:0;border-top:3px solid var(--blue);border-radius:0}
+.teacher-page .process-map{gap:clamp(16px,3.2vh,30px) clamp(18px,2.4vw,32px)}
+.teacher-page .map-example{margin-top:clamp(14px,3vh,28px);color:var(--body)}
+.teacher-page .map-example img{border-radius:8px}
+.teacher-page .map-example.final-map-line{color:var(--ink);font-weight:700}
+.teacher-page .ioai-line{background:transparent;padding:4px 0 4px 18px;border-left:5px solid var(--yellow)}
+.teacher-page .slide-visual,.teacher-page .discussion-content{justify-content:flex-start;padding-top:clamp(8px,7vh,80px)}
+.teacher-page .test-demo{justify-content:start;margin-left:0}.teacher-page .program-overview{margin-top:0}.teacher-page .test-demo>div{text-align:left}
+.teacher-page div.evidence-callout{padding:6px 0 6px clamp(18px,2vw,28px);border-left:6px solid var(--blue)}
+.teacher-page .test-demo>div{padding:16px 0 0;border:0;border-top:4px solid var(--blue)}
+.teacher-page .test-demo>div:last-child{border-top-color:var(--violet)}
+.teacher-page .slide-match-demo>div{min-height:0;padding:16px 0 0;border:0;border-top:4px solid var(--blue)}
+.teacher-page .slide-match-demo>p{background:transparent;padding:0;color:var(--body);font-size:clamp(18px,1.8vw,24px)}
+.teacher-page .network-stages>div{min-height:0;padding:12px 0 0;background:transparent;border:0;border-top:3px solid var(--blue)}
+.teacher-page .network-stages>div:nth-child(3){border-top-color:var(--violet)}
+.teacher-page .network-stages>div:nth-child(4){border-top-color:var(--green)}
+.teacher-page .network-demo figcaption,.teacher-page .neighbor-demo figcaption{padding:6px 0 0;background:transparent;color:var(--body)}
+.teacher-page .large-note{max-width:62ch;color:var(--body)}
+/* Four-step flows: one column per step (the old grid only had room for three). */
+.teacher-page .improve-flow,.teacher-page .text-training-flow{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);align-items:start;gap:12px;padding:0}
+.teacher-page .improve-flow>b,.teacher-page .text-training-flow>b{padding-top:12px;border-top:3px solid var(--blue);line-height:1.2}
+.teacher-page .improve-flow>span,.teacher-page .text-training-flow>span{padding-top:12px;color:var(--blue);text-align:center}
+/* Word counts: the example sentences on the left, the count they produce on the right. */
+.teacher-page .sentence-counts{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto;column-gap:clamp(24px,5vw,72px);row-gap:6px;align-items:end}
+.teacher-page .sentence-counts>div{grid-row:1/3;display:grid;gap:0}
+.teacher-page .sentence-counts>div span{padding:8px 0;border-bottom:1px solid var(--line)}
+.teacher-page .sentence-counts>b{align-self:end;color:var(--body)}
+.teacher-page .sentence-counts>strong{align-self:start;font-size:clamp(24px,2.6vw,36px);line-height:1.15;color:var(--indigo)}
+.teacher-page .sentence-counts>b{font-size:clamp(18px,1.8vw,24px)}
+.teacher-page .parallel-example{gap:clamp(16px,3vw,40px)}
+.teacher-page .parallel-example>strong{color:var(--muted);text-align:center}
+.teacher-page .parallel-example figure.word-example{padding:16px 0 0;border-top:3px solid var(--violet)}
+.teacher-page .teacher-dialog{border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+
+/* --- Student lab --------------------------------------------------------- */
+/* Long states (matching feedback, result cards) scroll inside the work area instead of being cut off. */
+.student-page .lab-screen{overflow-x:hidden;overflow-y:auto;justify-content:safe center}
+.student-page .key-explanation,.student-page .language-counts,.student-page .language-prompt{padding:0;background:transparent;border:0;color:var(--body)}
+.student-page .language-counts{font-weight:650;color:var(--ink)}
+.student-page .edge-pattern{background:var(--tint);border:0;border-radius:10px}
+.student-page :is(.test-photo-strip,.neighbor-row,.search-results) figure{background:transparent;border:0}
+.student-page :is(.test-photo-strip,.neighbor-row,.search-results,.network-layout,.classifier-layout,.measure-demo,.challenge-photo) img{border-radius:8px}
+.student-page :is(.test-photo-strip,.neighbor-row,.search-results) figcaption{padding:4px 0 0;background:transparent}
+.student-page .network-results article{min-height:0;padding:12px 0 0;background:transparent;border:0;border-top:3px solid var(--line-strong)}
+.student-page .network-results article.after-training{border-top-color:var(--blue)}
+.student-page .score-comparison article{padding:14px 0 0;background:transparent;border:0;border-top:4px solid var(--blue)}
+.student-page .score-comparison article:nth-child(2){border-top-color:var(--violet)}
+.student-page .sentence-list{gap:0 clamp(16px,3vw,32px)}
+.student-page .sentence-list span{padding:10px 0;background:transparent;border:0;border-bottom:1px solid var(--line)}
+.student-page :is(.language-prediction,.benchmark-intro){padding:4px 0 4px 20px;background:transparent;border:0;border-left:5px solid var(--blue)}
+.student-page .reflection-control{width:100%;max-width:760px}
+.student-page .match-screen .match-board{flex:none}
+.student-page .match-action.matched{background:#edf7f1;border-left:5px solid var(--green)}
+
+/* Result cards are what students hold up, so they keep a white surface, without boxes inside. */
+.student-page .result-card{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--yellow);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+.student-page .result-card .result-summary{gap:clamp(16px,3vw,40px);margin:12px 0 0;padding-bottom:12px;border-bottom:1px solid var(--line);grid-template-columns:auto auto;justify-content:start}
+.student-page .result-card .result-summary>div{padding:0;background:transparent}
+.student-page .result-card .result-accuracy{padding:12px 0;background:transparent;border:0}
+.student-page .result-card .result-accuracy>strong{color:var(--indigo)}
+.student-page .result-card .result-example{margin:0;padding:12px 0 0;background:transparent;border:0;border-top:1px solid var(--line)}
+.student-page .result-card .language-coverage{margin:0;padding:12px 0;background:transparent;border-top:1px solid var(--line)}
+.student-page .result-card .language-test-example{margin:0;padding:12px 0 0;background:transparent;border:0;border-top:1px solid var(--line)}
+.student-page .result-card .accuracy-note{color:var(--muted)}
+
+/* --- Small screens: legible type, scroll rather than shrink ------------------ */
+@media(max-width:480px){
+ .teacher-page .slide-visual,.teacher-page .discussion-content{overflow-y:auto}
+ .teacher-page .neighbor-demo>div>span{font-size:12px;margin-bottom:3px}
+ .teacher-page .neighbor-demo>div,.teacher-page .neighbor-demo>div p,.teacher-page .neighbor-demo>strong,.teacher-page .neighbor-demo figcaption{font-size:11px}
+ .teacher-page .process-step{padding-top:7px}.teacher-page .process-step h2{font-size:13px}.teacher-page .process-step p{font-size:11px}
+ .teacher-page .transition-copy>span,.teacher-page .measure-example>b{font-size:13px}
+ .teacher-page .network-stages b{font-size:12px}.teacher-page .network-stages span,.teacher-page .network-demo figcaption{font-size:11px}
+ .teacher-page .large-note{font-size:13px;padding:0}
+ .teacher-page .parallel-example figure span,.teacher-page .parallel-example figure b,.teacher-page .parallel-example>strong{font-size:12px}
+ .teacher-page .sentence-counts{grid-template-columns:1fr;grid-template-rows:auto}.teacher-page .sentence-counts>div{grid-row:auto}.teacher-page .sentence-counts span{font-size:13px;padding:4px 0}
+ .teacher-page .slide-match-demo>div,.teacher-page .slide-match-demo p,.teacher-page .map-example span{font-size:12px}
+ .teacher-page .program-topics span{font-size:13px}.teacher-page .program-scope{font-size:12px}
+ .teacher-page .improve-flow,.teacher-page .text-training-flow{grid-template-columns:1fr;gap:6px}
+ .teacher-page .improve-flow>span,.teacher-page .text-training-flow>span{display:none}
+ .teacher-page .improve-flow>b,.teacher-page .text-training-flow>b{padding-top:6px;font-size:14px}
+ .student-page .dataset-screen .dataset-photo>span,.student-page .dataset-screen .dataset-photo>b{font-size:10px}
+ .student-page .dataset-screen .label-editor>span{font-size:12px}.student-page .dataset-screen .label-editor .category-choice{font-size:12px;min-height:32px}
+ .student-page .match-screen .match-action,.student-page .match-screen .match-stage{min-height:36px;padding:6px;font-size:12px;line-height:1.2}
+ .student-page .reflection-screen .process-step h2{font-size:12px}.student-page .reflection-screen .process-step p{font-size:11px}
+ .student-page .result-screen .report-model-choice button{font-size:12px}
+ .student-page .language-result-actions .btn{font-size:13px}
 }
