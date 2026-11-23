@@ -613,3 +613,181 @@ body.student-page{display:flex;flex-direction:column;min-height:100dvh;backgroun
 }
 /* Result save indicator (student header) */
 .save-status{display:inline-flex;align-items:center;gap:7px;margin:0 16px 0 auto;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--body);font-size:12px;font-weight:650;line-height:1.3;white-space:nowrap}.save-status[hidden]{display:none}.save-status-dot{width:8px;height:8px;flex:none;border-radius:50%;background:#94a3b8}.save-status[data-state="saving"] .save-status-dot,.save-status[data-state="waiting"] .save-status-dot{background:var(--blue);animation:save-pulse 1.2s ease-in-out infinite}.save-status[data-state="saved"] .save-status-dot{background:var(--green)}.save-status[data-state="failed"]{border-color:#e4b4ae;background:#fff6f4;color:#7a2622}.save-status[data-state="failed"] .save-status-dot{background:#b83d39}.save-status-retry{margin:0 0 0 2px;padding:0;border:0;background:none;color:inherit;font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:2px}@keyframes save-pulse{50%{opacity:.35}}@media(prefers-reduced-motion:reduce){.save-status-dot{animation:none!important}}@media(max-width:520px){.save-status{margin-right:10px;padding:4px 8px}.save-status:not([data-state="failed"]) span:not(.save-status-dot){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+
+/* Cleaner teacher slides and a fixed one-screen student work area. */
+.teacher-page{min-height:100dvh;overflow:hidden;grid-template-rows:56px minmax(0,1fr) 52px}
+.slide-content{width:min(1180px,calc(100% - 64px));height:100%;padding:clamp(12px,2vh,22px) 0;grid-template-rows:auto minmax(0,1fr);gap:clamp(10px,1.8vh,18px);align-content:stretch}
+.slide-content h1,.slide-content.question-slide-layout h1{height:auto;max-width:1120px;margin:0;overflow:visible;font-size:clamp(34px,4.2vw,58px);line-height:1.04}
+.slide-visual,.discussion-content{min-height:0;overflow:hidden}
+.discussion-content{justify-content:center;gap:clamp(10px,2vh,18px);padding:0}
+.discussion-question{font-size:clamp(28px,3.4vw,48px);line-height:1.12}
+.project-example{width:100%;max-height:100%;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:clamp(12px,2vw,24px);padding:clamp(12px,2vw,22px)}
+.project-example img{height:min(34vh,290px)}
+.project-example strong{font-size:clamp(24px,2.7vw,36px)}
+.project-example>div>b{font-size:clamp(21px,2.3vw,30px)}
+.project-example p{font-size:clamp(18px,2vw,25px)}
+.hook-example{display:grid;grid-template-columns:minmax(230px,.75fr) minmax(0,1.25fr);gap:clamp(18px,4vw,54px);align-items:center;width:100%;max-width:1050px;margin:0 auto;padding:clamp(12px,2.2vw,24px);background:white;border:1px solid var(--line)}
+.hook-example figure{margin:0}.hook-example img{display:block;width:100%;height:min(46vh,390px);object-fit:cover}.hook-example div{display:grid;gap:16px}.hook-example strong{font-size:clamp(24px,3vw,38px);line-height:1.15;color:var(--indigo)}.hook-example p{margin:0;color:var(--body);font-size:clamp(18px,2.2vw,27px);line-height:1.35}
+.program-overview{width:100%;max-width:1050px;margin:auto;display:grid;gap:clamp(12px,2.4vh,24px)}
+.program-purpose{max-width:880px;margin:0;font-size:clamp(22px,3vw,36px);font-weight:750;line-height:1.2;color:var(--indigo)}
+.program-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.program-topics span{padding:clamp(11px,1.7vh,18px) clamp(10px,1.4vw,18px);background:white;border:1px solid var(--line);font-size:clamp(16px,1.8vw,22px);font-weight:750;line-height:1.2}
+.program-scope{margin:0;color:var(--body);font-size:clamp(15px,1.5vw,19px);font-weight:650}
+
+body.student-page{height:100dvh;min-height:0;overflow:hidden}
+.student-page .student-top{width:100%;max-width:none;min-height:52px;flex:none;padding:8px clamp(14px,3vw,32px)}
+.student-page #student-main{width:min(1220px,100%);min-height:0;flex:1 1 auto;overflow:hidden;padding:clamp(8px,1.6vh,16px) clamp(14px,3vw,32px)}
+.student-page .lab-screen{width:100%;max-width:1080px;height:100%;min-height:0;margin:0 auto;gap:clamp(8px,1.5vh,14px);justify-content:center;overflow:hidden}
+.student-page .lab-heading h1{font-size:clamp(27px,3.4vw,44px);line-height:1.04}
+.student-page .lab-heading p{margin-top:5px;font-size:clamp(14px,1.5vw,18px);line-height:1.3}
+.student-page .student-bottom{width:100%;max-width:none;min-height:58px;flex:none;padding:7px clamp(14px,3vw,32px);display:flex;justify-content:space-between;align-items:center}
+.student-page .dataset-screen{justify-content:normal;gap:clamp(5px,1vh,9px)}
+.student-page .dataset-screen .lab-heading h1{font-size:clamp(24px,2.8vw,36px)}
+.student-page .dataset-screen .lab-heading p{font-size:clamp(13px,1.3vw,16px)}
+.student-page .dataset-screen .size-choice{gap:6px}
+.student-page .dataset-screen .size-choice button{min-height:34px;padding:5px 10px;font-size:14px}
+.student-page .dataset-screen .selection-count{margin:0;gap:10px;font-size:13px}
+.student-page .dataset-screen .category-counts{gap:5px 10px}
+.student-page .dataset-screen .category-counts span{font-size:12px}
+.student-page .dataset-grid{flex:1 1 auto;min-height:0;grid-template-rows:repeat(4,minmax(0,1fr));gap:6px}
+.student-page .dataset-photo{min-height:0;grid-template-columns:clamp(50px,6.6vw,78px) minmax(0,1fr);grid-template-rows:1fr 1fr}
+.student-page .dataset-photo .photo{width:clamp(50px,6.6vw,78px);height:100%;min-height:0}
+.student-page .dataset-photo>span{font-size:clamp(11px,1.05vw,13px)}
+.student-page .dataset-photo>b{font-size:clamp(10px,.95vw,12px)}
+.student-page .dataset-screen .label-editor{grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:0}
+.student-page .dataset-screen .label-editor>span{font-size:12px}
+.student-page .dataset-screen .label-editor .category-choice{min-height:32px;padding:4px 8px;font-size:12px}
+.student-page .dataset-screen>.btn{min-height:38px;margin:0;padding:7px 13px;font-size:15px}
+.student-page .dataset-screen .inline-feedback,.student-page .dataset-screen .load-message{font-size:12px;padding:4px 7px}
+.student-page .measure-demo img{height:min(34vh,270px)}
+.student-page .edge-pattern{min-height:clamp(92px,16vh,150px);padding:12px}
+.student-page .challenge-photo img{height:min(34vh,285px)}
+.student-page .result-card{max-height:100%;padding:clamp(12px,2vh,20px)}
+.student-page .result-screen{gap:clamp(6px,1vh,10px)}
+.student-page .result-screen .result-accuracy{padding:clamp(8px,1.4vh,14px)}
+.student-page .result-screen .result-accuracy>strong{font-size:clamp(48px,8vh,76px)}
+.student-page .result-screen .result-example{margin:8px 0;padding:8px 10px}
+.student-page .result-screen .reflection-field textarea{min-height:46px;max-height:70px;padding:6px 8px;font-size:14px}
+.student-page .result-screen .accuracy-note{margin:5px 0;font-size:12px}
+.student-page .result-screen .report-model-choice{margin:0}
+.student-page .result-screen .result-actions{margin-top:0}
+.student-page .language-edit textarea{min-height:0;height:clamp(110px,22vh,190px);resize:none}
+.student-page .language-edit{gap:clamp(6px,1vh,10px)}
+.student-page .reflection-screen .process-map{gap:6px}
+.student-page .reflection-screen .process-step{min-height:0;padding:8px}
+.student-page .reflection-screen .process-step h2{font-size:clamp(14px,1.4vw,18px)}
+.student-page .reflection-screen .process-step p{font-size:clamp(11px,1vw,13px);line-height:1.2}
+.student-page .reflection-screen .key-explanation{font-size:clamp(14px,1.35vw,17px);padding:7px 10px}
+.student-page .reflection-screen .reflection-control{font-size:14px}
+.student-page .reflection-screen textarea{min-height:44px;max-height:60px;padding:6px 8px;font-size:14px}
+@media(max-width:780px){
+ .teacher-page{grid-template-rows:48px minmax(0,1fr) 46px}
+ .teacher-page .deck-actions{gap:4px}.teacher-page .deck-actions button,.teacher-page .toolbar-link{font-size:11px;padding:6px}
+ .slide-content{width:calc(100% - 36px)}
+ .program-topics{gap:7px}.program-topics span{font-size:15px;padding:10px}
+ .hook-example{grid-template-columns:minmax(150px,.75fr) minmax(0,1.25fr);gap:14px}.hook-example img{height:min(34vh,260px)}
+ .project-example{grid-template-columns:minmax(130px,.65fr) minmax(0,1.35fr)}
+ .student-page .student-top{min-height:48px}.student-page .student-bottom{min-height:54px}
+ .student-page .dataset-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}
+ .student-page .dataset-photo{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto auto;position:relative}
+ .student-page .dataset-photo .photo{grid-row:1/4;width:100%;height:100%;object-fit:cover}
+ .student-page .dataset-photo>span,.student-page .dataset-photo>b{position:absolute;left:2px;right:2px;z-index:1;width:max-content;max-width:calc(100% - 4px);padding:2px 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#ffffffed;font-size:clamp(8px,1.4vw,11px);line-height:1.15}
+ .student-page .dataset-photo>span{bottom:19px}.student-page .dataset-photo>b{bottom:2px}
+ .student-page .dataset-screen .label-editor{grid-template-columns:1fr;gap:4px}
+ .student-page .dataset-screen .label-editor .category-buttons{gap:5px;flex-wrap:nowrap}
+ .student-page .dataset-screen .label-editor .category-choice{flex:1 1 0;min-width:0;padding:4px;font-size:11px}
+ .student-page .match-board{min-height:0}.student-page .match-action,.student-page .match-stage{min-height:38px;padding:6px;font-size:13px}
+}
+@media(max-width:480px){
+ .teacher-page{grid-template-rows:44px minmax(0,1fr) 44px}
+ .teacher-page .brand{font-size:9px}.teacher-page .deck-actions button,.teacher-page .toolbar-link{font-size:9px;padding:5px}
+ .slide-content{width:calc(100% - 24px);padding:8px 0;gap:7px}
+ .slide-content h1,.slide-content.question-slide-layout h1{font-size:clamp(27px,7vw,34px)}
+ .discussion-question{font-size:clamp(22px,6vw,30px)}
+ .program-overview{gap:10px}.program-purpose{font-size:21px}.program-topics{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.program-topics span{font-size:12px;padding:7px}.program-scope{font-size:12px}
+ .hook-example{grid-template-columns:1fr;gap:8px;padding:9px}.hook-example img{height:25vh}.hook-example div{gap:7px}.hook-example strong{font-size:19px}.hook-example p{font-size:15px}
+ .project-example{grid-template-columns:1fr;gap:7px;padding:8px}.project-example img{height:17vh}.project-example>div{gap:6px}.project-example strong{font-size:18px}.project-example>div>b{font-size:16px}.project-example p{font-size:14px}
+ .student-page .student-top{min-height:44px;padding:6px 10px}.student-page .student-top .brand{font-size:9px;gap:5px}.student-page .progress-track{width:68px}
+ .student-page #student-main{padding:6px 10px}
+ .student-page .lab-screen{gap:6px}
+ .student-page .lab-heading h1{font-size:clamp(24px,7vw,31px)}
+ .student-page .lab-heading p{font-size:13px}
+ .student-page .student-bottom{min-height:48px;padding:5px 10px}.student-page .student-bottom .btn{min-height:36px;padding:6px 11px;font-size:14px}
+ .student-page .dataset-screen{gap:4px}.student-page .dataset-screen .lab-heading h1{font-size:22px}.student-page .dataset-screen .lab-heading p{font-size:11px;margin-top:3px}
+ .student-page .dataset-screen .size-choice button{min-height:28px;padding:3px 7px;font-size:12px}
+ .student-page .dataset-screen .selection-count{font-size:11px}.student-page .dataset-screen .category-counts{gap:3px 6px}.student-page .dataset-screen .category-counts span{font-size:10px}
+ .student-page .dataset-screen .dataset-grid{gap:4px}
+ .student-page .dataset-screen .dataset-photo>span,.student-page .dataset-screen .dataset-photo>b{font-size:8px}
+ .student-page .dataset-screen .label-editor>span{font-size:10px}.student-page .dataset-screen .label-editor .category-choice{min-height:26px;font-size:9px}
+ .student-page .dataset-screen>.btn{min-height:32px;font-size:13px;padding:5px 9px}
+ .student-page .challenge-photo img{height:24vh}.student-page .challenge-screen .key-explanation{font-size:15px}
+ .student-page .measure-demo{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);gap:5px}.student-page .measure-demo img{height:20vh}.student-page .measure-demo>span{font-size:25px;transform:none}.student-page .edge-pattern{min-height:65px;padding:7px}.student-page .edge-pattern i{width:4px}
+ .student-page .classifier-layout,.student-page .network-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:8px}.student-page .new-example img,.student-page .network-layout figure img{height:22vh}.student-page .classifier-action{gap:5px}.student-page .classifier-action p,.student-page .classifier-action label{font-size:13px}.student-page .classifier-action select{min-height:34px;font-size:13px}.student-page .neighbor-row{gap:4px}.student-page .neighbor-row img{height:55px}.student-page .neighbor-row figcaption{font-size:11px}
+ .student-page .test-photo-strip{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.student-page .test-photo-strip .photo{height:9vh}
+ .student-page .result-screen .result-accuracy>strong{font-size:48px}.student-page .result-screen .result-summary{margin:5px 0}.student-page .result-screen .result-example{font-size:12px}.student-page .result-screen .report-model-choice button{font-size:10px;padding:5px}.student-page .result-screen .result-actions .btn{font-size:12px;padding:6px}
+ .student-page .language-edit textarea{height:18vh}.student-page .sentence-list{grid-template-columns:repeat(2,minmax(0,1fr))}.student-page .sentence-list span{font-size:14px;padding:8px}
+ .student-page .search-results img{height:8vh}.student-page .match-board{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px}.student-page .match-actions{grid-template-columns:1fr}.student-page .match-targets{grid-template-columns:1fr}.student-page .match-action,.student-page .match-stage{font-size:10px;min-height:32px}.student-page .match-hint{font-size:12px}
+ .student-page .reflection-screen .process-map{grid-template-columns:repeat(3,minmax(0,1fr))}.student-page .reflection-screen .process-step{padding:5px}.student-page .reflection-screen .process-step h2{font-size:10px}.student-page .reflection-screen .process-step p{font-size:9px}
+}
+.teacher-page{height:100dvh;min-height:0}
+@media(max-width:480px){
+ .teacher-page{grid-template-rows:44px minmax(0,1fr) 54px}
+ .teacher-page .slide-content{padding:6px 0;gap:5px}
+ .teacher-page .slide-content h1,.teacher-page .slide-content.question-slide-layout h1{font-size:clamp(23px,6.2vw,29px);line-height:1.02}
+ .teacher-page .discussion-content{justify-content:flex-start;gap:5px}
+ .teacher-page .discussion-question{font-size:clamp(18px,4.9vw,23px);line-height:1.08}
+ .teacher-page .slide-visual{gap:5px;justify-content:flex-start}
+ .teacher-page .project-example{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:6px;padding:6px}
+ .teacher-page .project-example img{height:12vh;min-height:64px}
+ .teacher-page .project-example strong{font-size:15px}.teacher-page .project-example>div>b{font-size:14px}.teacher-page .project-example p{font-size:12px}
+ .teacher-page .hook-example{grid-template-columns:minmax(95px,.75fr) minmax(0,1.25fr);gap:8px;padding:7px}
+ .teacher-page .hook-example img{height:19vh;min-height:96px}.teacher-page .hook-example div{gap:5px}.teacher-page .hook-example strong{font-size:16px}.teacher-page .hook-example p{font-size:12px}
+ .teacher-page .process-map{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+ .teacher-page .process-step{min-height:0;padding:5px;gap:2px}
+ .teacher-page .process-step>b{width:17px;height:17px;font-size:10px}
+ .teacher-page .process-step h2{font-size:11px;line-height:1.05}
+ .teacher-page .process-step p{font-size:9px;line-height:1.12}
+ .teacher-page .map-example{gap:6px;margin-top:4px}.teacher-page .map-example img{width:40px;height:40px}.teacher-page .map-example span{font-size:10px;line-height:1.2}
+ .teacher-page .neighbor-demo{grid-template-columns:minmax(70px,1fr) 14px minmax(60px,1fr) 14px minmax(65px,1fr);gap:3px;padding:5px}
+ .teacher-page .neighbor-demo>figure img{height:11vh;min-height:54px}.teacher-page .neighbor-demo>figure figcaption,.teacher-page .neighbor-thumbs figcaption{font-size:9px;padding:3px}
+ .teacher-page .neighbor-demo>div{font-size:9px;line-height:1.15}.teacher-page .neighbor-demo>div p{font-size:8px;margin:3px 0}.teacher-page .neighbor-demo>b{font-size:13px;transform:none}.teacher-page .neighbor-demo>strong{font-size:10px}
+ .teacher-page .network-demo{grid-template-columns:90px minmax(0,1fr);gap:5px}.teacher-page .network-demo figure img{height:13vh;min-height:64px}.teacher-page .network-demo figcaption{font-size:9px;padding:4px}
+ .teacher-page .network-stages{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.teacher-page .network-stages>div{min-height:0;padding:5px;gap:3px}.teacher-page .network-stages b{font-size:10px}.teacher-page .network-stages span{font-size:9px}
+ .teacher-page .large-note{font-size:11px;line-height:1.2;padding:5px;margin:3px 0}
+ .teacher-page .improve-flow,.teacher-page .text-training-flow{grid-template-columns:1fr;gap:3px;padding:8px}
+ .teacher-page .improve-flow>* ,.teacher-page .text-training-flow>*{font-size:12px;line-height:1.12}
+ .teacher-page .improve-flow span,.teacher-page .text-training-flow span{font-size:10px;line-height:1;transform:none;height:10px}
+ .teacher-page .test-demo{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:4px}.teacher-page .test-demo>div{gap:4px;padding:8px;border-top-width:3px}.teacher-page .test-demo b{font-size:12px}.teacher-page .test-demo strong{font-size:15px}.teacher-page .test-demo>span{font-size:15px;transform:none}
+ .teacher-page .evidence-callout{gap:5px;padding:8px;font-size:13px}.teacher-page .evidence-callout strong,.teacher-page .evidence-callout b{font-size:14px}
+ .teacher-page .app-example img{height:13vh;max-height:100px}.teacher-page .app-example div{gap:4px;padding:7px}.teacher-page .app-example span,.teacher-page .app-example strong{font-size:12px}
+ .teacher-page .slide-visual .parallel-example{gap:8px}.teacher-page .parallel-example figure img{height:12vh;min-height:55px}.teacher-page .parallel-example figure span,.teacher-page .parallel-example figure b{font-size:10px}.teacher-page .parallel-example>strong{font-size:11px}
+ .teacher-page .sentence-counts{gap:8px;padding:7px}.teacher-page .sentence-counts span{font-size:10px;padding:4px}
+ .teacher-page .slide-match-demo{gap:5px}.teacher-page .slide-match-demo>div{padding:7px;font-size:10px}.teacher-page .slide-match-demo p{font-size:10px}
+ .program-overview{gap:8px}.program-purpose{font-size:19px}.program-topics span{font-size:11px;padding:6px}.program-scope{font-size:10px}
+}
+@media(max-width:480px){
+ .teacher-page .slide-content h1,.teacher-page .slide-content.question-slide-layout h1{line-height:1}
+ .teacher-page .transition-copy{gap:5px;font-size:12px;line-height:1.16}
+ .teacher-page .transition-copy>strong{font-size:14px;line-height:1.08}
+ .teacher-page .transition-copy>span{font-size:11px;line-height:1.16}
+ .teacher-page .label-example,.teacher-page .measure-example{gap:5px;padding:5px}
+ .teacher-page .label-example img,.teacher-page .measure-example img{height:9vh;min-height:42px}
+ .teacher-page .measure-example>b{font-size:11px}
+ .teacher-page .large-note{max-width:100%}
+ .student-page .language-result-screen,.student-page .language-explore,.student-page .language-evaluation{gap:5px}
+ .student-page .language-result-card{padding:8px}
+ .student-page .language-result-card .result-summary{gap:4px;margin:4px 0}
+ .student-page .language-result-card .result-summary>div{padding:5px}
+ .student-page .language-result-card .result-accuracy{padding:7px}
+ .student-page .language-result-card .result-accuracy>strong{font-size:42px}
+ .student-page .language-test-example{padding:7px}
+ .student-page .language-test-example .test-context{font-size:15px}
+ .student-page .language-result-actions .btn{min-height:32px;font-size:11px;padding:5px}
+ .student-page .match-screen .lab-heading h1{font-size:23px}
+ .student-page .match-screen .match-board{flex:1;min-height:0}
+ .student-page .match-screen .match-actions,.student-page .match-screen .match-targets{gap:4px}
+ .student-page .match-screen .match-actions h2,.student-page .match-screen .match-targets h2{font-size:13px;margin:0}
+ .student-page .match-screen .match-action,.student-page .match-screen .match-stage{min-height:28px;padding:4px;font-size:9px;line-height:1.1}
+ .student-page .search-screen .search-results img{height:7vh}
+ .student-page .search-screen .search-results figcaption{font-size:10px;padding:3px}
+}
