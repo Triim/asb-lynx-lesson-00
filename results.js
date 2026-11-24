@@ -1,5 +1,6 @@
 // Teacher dashboard: Google sign-in and live Firestore results. Reading is allowed only for the
 // teacher account named in firestore.rules; this page never decides access on its own.
+import { tallySurvey, surveyChartHtml } from './survey.js';
 import { RESULTS_COLLECTION, NO_SESSION, IMAGE_TEST_TOTAL, LANGUAGE_TEST_TOTAL, groupByStudent, newSessionCode, normalizeSessionId } from './result-records.js';
 
 const MAX_RESULTS = 2000;
@@ -11,7 +12,7 @@ const store = {
 };
 
 const view = {
-  records: [], loaded: false, error: '', updatedAt: null, fromCache: false, email: '',
+  records: [], surveys: [], loaded: false, error: '', updatedAt: null, fromCache: false, email: '',
   session: normalizeSessionId(new URLSearchParams(location.search).get('session')) || store.get('lesson00.results.session') || '',
   generated: normalizeSessionId(store.get('lesson00.results.generated')) || '',
   expanded: new Set(),
@@ -46,11 +47,11 @@ function languageCells(result) {
 
 function renderSessions() {
   const latest = new Map();
-  for (const record of view.records) latest.set(record.sessionId, Math.max(latest.get(record.sessionId) || 0, millisOf(record)));
+  for (const record of [...view.records, ...view.surveys]) latest.set(record.sessionId, Math.max(latest.get(record.sessionId) || 0, millisOf(record)));
   if (view.generated && !latest.has(view.generated)) latest.set(view.generated, Date.now());
   if (view.session && !latest.has(view.session)) latest.set(view.session, 0);
   const sessions = [...latest].sort((a, b) => b[1] - a[1]).map(([id]) => id);
-  const counts = new Map(sessions.map((id) => [id, new Set(view.records.filter((r) => r.sessionId === id).map((r) => r.studentId)).size]));
+  const counts = new Map(sessions.map((id) => [id, new Set([...view.records, ...view.surveys].filter((r) => r.sessionId === id).map((r) => r.studentId)).size]));
   const key = JSON.stringify([view.session, sessions, [...counts]]);
   if (key === sessionOptionsKey) return; // do not rebuild an open dropdown on every update
   sessionOptionsKey = key;
@@ -80,7 +81,12 @@ function render() {
   const records = view.records.filter((record) => !view.session || record.sessionId === view.session);
   const students = groupByStudent(records);
   const images = records.filter((r) => r.kind === 'image').length, languages = records.filter((r) => r.kind === 'language').length;
-  $('#summary').innerHTML = [['Students', students.length], ['Image results', images], ['Language results', languages]]
+  // Survey: anonymous answers, one set per student, shown as simple bar charts.
+  const tally = tallySurvey(view.surveys.filter((record) => !view.session || record.sessionId === view.session));
+  $('#survey-charts').innerHTML = !view.loaded ? '' : tally.total
+    ? '<p class="survey-count">' + tally.total + ' student' + (tally.total === 1 ? '' : 's') + ' answered</p><div class="survey-charts">' + tally.questions.map((question) => surveyChartHtml(question, tally.total)).join('') + '</div>'
+    : '<p class="dash-empty">No survey answers yet. Charts appear as students answer the four questions at the start of the lab.</p>';
+  $('#summary').innerHTML = [['Students', students.length], ['Survey answers', tally.total], ['Image results', images], ['Language results', languages]]
     .map(([label, value]) => '<div><span>' + label + '</span><strong>' + (view.loaded ? value : '…') + '</strong></div>').join('');
   $('#live-status').textContent = view.error ? 'Not live' : !view.loaded ? 'Connecting…' : view.fromCache ? 'Offline · showing saved copy' : 'Live · updated ' + view.updatedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   $('#live-status').dataset.state = view.error || view.fromCache ? 'off' : view.loaded ? 'live' : 'wait';
@@ -103,12 +109,14 @@ function render() {
 }
 
 function listen() {
-  view.loaded = false; view.error = ''; view.records = [];
+  view.loaded = false; view.error = ''; view.records = []; view.surveys = [];
   render();
   const { sdk, db } = fb;
   const results = sdk.query(sdk.collection(db, RESULTS_COLLECTION), sdk.orderBy('createdAt', 'desc'), sdk.limit(MAX_RESULTS));
   unsubscribe = sdk.onSnapshot(results, { includeMetadataChanges: true }, (snapshot) => {
-    view.records = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }))
+    const docs = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+    view.surveys = docs.filter((r) => r.kind === 'survey' && typeof r.studentId === 'string');
+    view.records = docs
       .filter((r) => (r.kind === 'image' || r.kind === 'language') && typeof r.studentId === 'string')
       .filter((r) => r.kind !== 'image' || r.nearestTotal === IMAGE_TEST_TOTAL)
       .filter((r) => r.kind !== 'language' || r.total === LANGUAGE_TEST_TOTAL);

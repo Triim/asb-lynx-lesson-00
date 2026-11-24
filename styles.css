@@ -963,3 +963,43 @@ body.teacher-page,body.student-page{background:var(--page);color:var(--ink)}
 @media(max-width:600px){.student-page .size-options{grid-template-columns:1fr;width:100%}.student-page .size-option{grid-template-columns:auto 1fr;align-items:baseline;column-gap:12px}.student-page .size-option small{grid-column:1/-1}.student-page .label-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .student-page .dataset-screen .size-options{margin-top:clamp(8px,2vh,20px)}
 @media(min-width:1000px){.student-page .label-grid{grid-template-columns:repeat(8,minmax(0,1fr));max-width:1180px}.student-page .label-card select{font-size:15px;padding:6px 8px}}
+
+/* Start-of-lesson survey (student): one question per screen, one tap answers and moves on. */
+.student-page .survey-options{display:grid;gap:10px;width:100%;max-width:640px}
+.student-page .survey-option{min-height:56px;padding:12px 18px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);font:inherit;font-size:18px;font-weight:700;text-align:left;cursor:pointer}
+.student-page .survey-option:hover{border-color:var(--blue)}
+.student-page .survey-option[aria-pressed="true"]{border:2px solid var(--blue);padding:11px 17px}
+.student-page .survey-thanks{margin:0;padding:6px 0 6px 14px;border-left:4px solid var(--blue);color:var(--body);font-size:16px}
+.student-page .before-fix{display:block;margin-top:6px;color:var(--muted);font-size:15px;font-weight:700}
+
+/* Survey charts: shared by the teacher slides (live) and the results dashboard. */
+.survey-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(18px,3vh,32px) clamp(18px,2.4vw,32px);width:100%}
+.survey-chart{margin:0;display:grid;align-content:start;gap:10px;padding-top:12px;border-top:3px solid var(--blue)}
+.survey-chart figcaption{color:var(--ink);font-weight:800;font-size:clamp(16px,1.5vw,20px);line-height:1.25}
+.survey-chart ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.survey-chart li{display:grid;grid-template-columns:minmax(0,1fr) 34px;grid-template-areas:"label count" "bar count";gap:3px 10px;align-items:center}
+.survey-label{grid-area:label;color:var(--body);font-size:clamp(14px,1.2vw,16px)}
+.survey-bar{grid-area:bar;height:10px;border-radius:5px;background:var(--tint);overflow:hidden}
+.survey-bar i{display:block;height:100%;border-radius:5px;background:var(--blue)}
+.survey-chart li b{grid-area:count;text-align:right;color:var(--indigo);font-size:clamp(16px,1.6vw,22px)}
+.survey-count{margin:0 0 6px;color:var(--muted);font-weight:700}
+.survey-empty{margin:0;color:var(--muted);font-size:clamp(16px,1.6vw,21px)}
+.survey-empty a{color:var(--blue)}
+
+/* Teacher slides: survey link, live charts, two image models side by side. */
+.teacher-page .survey-link{display:grid;gap:12px;max-width:1000px}
+.teacher-page .survey-link p,.teacher-page .survey-link span{margin:0;color:var(--body);font-size:clamp(18px,2vw,26px)}
+.teacher-page .survey-url{color:var(--indigo);font-size:clamp(26px,3.6vw,48px);line-height:1.15;overflow-wrap:anywhere}
+.teacher-page .survey-live{width:100%;max-width:1180px}
+.teacher-page .survey-live .survey-chart figcaption{font-size:clamp(18px,1.8vw,24px)}
+.teacher-page .survey-live .survey-label{font-size:clamp(16px,1.5vw,20px)}
+.teacher-page .survey-live .survey-bar{height:14px;border-radius:7px}
+.teacher-page .two-ways{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,40px);width:100%;max-width:1100px}
+.teacher-page .two-ways li{display:grid;align-content:start;gap:8px;padding-top:12px;border-top:3px solid var(--blue)}
+.teacher-page .two-ways li:nth-child(2){border-top-color:var(--violet)}
+.teacher-page .two-ways small{color:var(--blue);font-size:clamp(15px,1.3vw,18px);font-weight:800}
+.teacher-page .two-ways li:nth-child(2) small{color:var(--violet)}
+.teacher-page .two-ways b{color:var(--indigo);font-size:clamp(24px,2.6vw,36px);line-height:1.1}
+.teacher-page .two-ways span{color:var(--body);font-size:clamp(17px,1.7vw,23px);line-height:1.4}
+.teacher-page .two-ways+.large-note{margin-top:clamp(14px,3vh,32px)}
+@media(max-width:600px){.teacher-page .two-ways{grid-template-columns:1fr}}
