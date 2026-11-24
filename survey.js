@@ -55,11 +55,12 @@ export function tallySurvey(records) {
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
-// A horizontal bar chart for one question. Bars are scaled to the number of respondents.
-export function surveyChartHtml(question, total) {
+// A horizontal bar chart for one question: one row per answer (label, bar, count).
+// On a slide the question is the slide title, so the caption can be left out.
+export function surveyChartHtml(question, total, { caption = true } = {}) {
   const rows = question.counts.map(({ label, count }) => {
     const share = total ? Math.round(100 * count / total) : 0;
     return '<li><span class="survey-label">' + esc(label) + '</span><span class="survey-bar" aria-hidden="true"><i style="width:' + share + '%"></i></span><b>' + count + '</b></li>';
   }).join('');
-  return '<figure class="survey-chart"><figcaption>' + esc(question.text) + '</figcaption><ol>' + rows + '</ol></figure>';
+  return '<figure class="survey-chart">' + (caption ? '<figcaption>' + esc(question.text) + '</figcaption>' : '') + '<ol aria-label="' + esc(question.text) + '">' + rows + '</ol></figure>';
 }

@@ -1003,3 +1003,34 @@ body.teacher-page,body.student-page{background:var(--page);color:var(--ink)}
 .teacher-page .two-ways span{color:var(--body);font-size:clamp(17px,1.7vw,23px);line-height:1.4}
 .teacher-page .two-ways+.large-note{margin-top:clamp(14px,3vh,32px)}
 @media(max-width:600px){.teacher-page .two-ways{grid-template-columns:1fr}}
+
+/* Challenge photo: show the whole picture, never crop it. */
+.student-page .challenge-photo{width:min(560px,100%)}
+.student-page .challenge-photo img{width:100%;height:auto;max-height:none;object-fit:contain}
+
+/* Survey chart rows: answer, bar, count on one line. */
+.survey-chart li{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 3ch;grid-template-areas:"label bar count";gap:0 18px}
+.survey-chart li b{text-align:left}
+/* On a slide: one big chart, the question is the slide title. */
+.teacher-page .survey-live{max-width:1100px}
+.teacher-page .survey-live .survey-chart{border-top:0;padding-top:0}
+.teacher-page .survey-live .survey-chart ol{gap:clamp(14px,2.6vh,26px)}
+.teacher-page .survey-live .survey-label{font-size:clamp(20px,2.2vw,30px);color:var(--ink)}
+.teacher-page .survey-live .survey-bar{height:clamp(16px,2.4vh,24px);border-radius:6px}
+.teacher-page .survey-live .survey-bar i{border-radius:6px}
+.teacher-page .survey-live .survey-chart li b{font-size:clamp(26px,3vw,40px)}
+@media(max-width:600px){.survey-chart li{grid-template-columns:minmax(0,1fr) 3ch;grid-template-areas:"label count" "bar bar";gap:6px 12px}}
+
+/* Student: the two image models side by side, before any training. */
+.student-page .two-ways{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,36px);width:100%;max-width:980px}
+.student-page .two-ways li{display:grid;align-content:start;gap:6px;padding-top:12px;border-top:3px solid var(--blue)}
+.student-page .two-ways li:nth-child(2){border-top-color:var(--violet)}
+.student-page .two-ways small{color:var(--blue);font-size:16px;font-weight:800}
+.student-page .two-ways li:nth-child(2) small{color:var(--violet)}
+.student-page .two-ways b{color:var(--indigo);font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.student-page .two-ways span{color:var(--body);font-size:clamp(17px,1.5vw,20px);line-height:1.45}
+@media(max-width:600px){.student-page .two-ways{grid-template-columns:1fr}}
+
+/* Lead sentence under each lab heading: the link to the previous step, same size as body text. */
+.student-page .lab-heading p{font-size:clamp(17px,1.5vw,20px);line-height:1.45;color:var(--body);max-width:900px}
+body.student-page main .lab-screen .lab-heading p{font-size:clamp(16px,1.5vw,20px);line-height:1.45;color:var(--body)}

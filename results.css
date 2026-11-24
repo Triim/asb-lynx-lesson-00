@@ -126,3 +126,7 @@ h1{margin:4px 0 0;font-size:clamp(28px,3.2vw,40px);letter-spacing:-.03em;line-he
 
 .dash-summary{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:640px){.dash-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.survey-chart li{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 3ch;grid-template-areas:"label bar count";gap:0 12px}
+.survey-chart li b{text-align:left}
+.survey-chart ol{gap:10px}
+@media(max-width:600px){.survey-chart li{grid-template-columns:minmax(0,1fr) 3ch;grid-template-areas:"label count" "bar bar";gap:5px 10px}}
